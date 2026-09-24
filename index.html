@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KubeConfess — get your cluster to confess its security sins</title>
+<meta name="description" content="KubeConfess is an open-source, AI-powered agent that interrogates Kubernetes clusters for security issues in plain English, then proves the findings by walking the attack path itself.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a class="brand" href="#top"><img src="assets/images/logo-icon.png" alt=""><b>KubeConfess</b></a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#charges">The charges</a>
+        <a href="#evidence">Evidence</a>
+        <a href="#contribute">Contribute</a>
+        <a href="#start">Get started</a>
+      </div>
+      <a class="gh-link" href="https://github.com/arnavtripathy/KubeConfess" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+        GitHub
+      </a>
+      <button class="icon-btn" id="themeToggle" type="button" aria-label="Switch theme" title="Toggle light / dark">
+        <svg class="i-sun" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10" cy="10" r="3.6"/><path d="M10 1.8v2.1M10 16.1v2.1M18.2 10h-2.1M3.9 10H1.8M15.6 4.4l-1.5 1.5M5.9 14.1l-1.5 1.5M15.6 15.6l-1.5-1.5M5.9 5.9 4.4 4.4"/></svg>
+        <svg class="i-moon" viewBox="0 0 20 20" fill="currentColor"><path d="M17.3 12.9A7.6 7.6 0 0 1 7.1 2.7a7.6 7.6 0 1 0 10.2 10.2Z"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO: THE CONFESSION ============ -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="interrogator">
+        <a class="arsenal" href="https://www.blackhatmea.com/" target="_blank" rel="noopener">
+          <span class="a-mark">★</span>
+          <span class="a-txt">Selected for <b>Black Hat MEA Arsenal 2026</b></span>
+        </a>
+        <h1>Make your cluster confess.</h1>
+        <p class="sub">Ask questions in plain English and KubeConfess reports — with evidence — exactly how your Kubernetes cluster can be compromised.</p>
+        <ul class="questions">
+          <li>Which identities can reach cluster-admin?</li>
+          <li>What is readable from a compromised pod?</li>
+          <li>Is this escalation path actually exploitable?</li>
+        </ul>
+        <div class="hero-cta">
+          <a class="btn btn-solid" href="#start">Start an interrogation</a>
+          <a class="btn btn-ghost" href="#charges">Read the confession</a>
+        </div>
+      </div>
+
+      <div class="confession" id="confessionDoc">
+        <div class="doc-head">
+          <div class="t"><b>Statement of the Accused</b>cluster: prod-eu-1</div>
+          <div class="meta">FILE 0417<br>vulnerable-workloads<br>under caution</div>
+        </div>
+        <div class="statement" id="statement" aria-live="polite"></div>
+        <div class="guilty" id="guilty">Guilty</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="sec-rule">
+
+  <!-- ============ CHARGES ============ -->
+  <section id="charges">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="idx">The charges</span>
+        <h2>Three ways to put a cluster on the record</h2>
+        <p>Point KubeConfess at a kubeconfig, run it from inside a pod, or aim it at a single identity. Each is a distinct line of questioning.</p>
+      </div>
+
+      <div class="charge">
+        <div class="c-copy">
+          <span class="tag">line of questioning: interview</span>
+          <h3>Query it in plain English</h3>
+          <p>Point KubeConfess at a kubeconfig and interrogate live cluster state conversationally — which namespaces exist, what runs where, which service account a workload uses. No chaining <code>kubectl</code> flags, no memorizing RBAC verbs.</p>
+          <p>The same conversation surfaces the risks: it flags vulnerable workloads — privileged and root containers, dangerous host mounts — and audits permissions and RBAC, explaining why each finding matters and how to fix it.</p>
+          <ul class="c-list">
+            <li>Flags privileged/root containers and dangerous host-path mounts</li>
+            <li>Audits permissions and RBAC — cluster-admin and over-privileged bindings</li>
+            <li>Explains the security impact and the exact fix, not a raw YAML dump</li>
+          </ul>
+        </div>
+        <div class="c-term">
+          <div class="term">
+            <div class="term-bar"><i></i><i></i><i></i><span>arnav@cluster: ~/KubeConfess</span></div>
+            <div class="term-body" data-script="chat" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="charge flip">
+        <div class="c-copy">
+          <span class="tag">line of questioning: under caution</span>
+          <h3>Red-team it from the inside</h3>
+          <p>Run KubeConfess in-cluster and it operates from a single pod's point of view — the exact blast radius of an attacker who already has a shell in the container. It never reaches past that pod's own service account.</p>
+          <p>Purpose-built for red teams, it doesn't stop at reporting. Where the pod's permissions allow, it executes the attack — stealing ServiceAccount tokens and harvesting readable secrets — so you leave with proof the path is exploitable, not a theory that it might be. And many more features for all.</p>
+          <ul class="c-list">
+            <li>Self-scans the pod: capabilities, host mounts, sockets, metadata endpoints, sensitive env vars</li>
+            <li>Token theft — decodes SA tokens and emits ready-to-use <code>kubectl</code> / <code>curl</code> commands</li>
+            <li>Secret harvesting — decodes and dumps real secret values, not just their names</li>
+          </ul>
+        </div>
+        <div class="c-term">
+          <div class="term">
+            <div class="term-bar"><i></i><i></i><i></i><span>root@juicy-pod: /KubeConfess</span></div>
+            <div class="term-body" data-script="incluster" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="charge">
+        <div class="c-copy">
+          <span class="tag">line of questioning: reconstruction</span>
+          <h3>Map the full path to cluster-admin</h3>
+          <p>Aim <code>investigate</code> at a pod, namespace, or service account and KubeConfess runs a fixed sequence of checks against it, then reconstructs the route to cluster-admin — bound roles, privileged containers, host mounts, and every secret reachable along the way.</p>
+          <p>You get a structured written report — and, by adding <code>--graph</code>, a rendered attack graph in the style of BloodHound for Active Directory.</p>
+          <ul class="c-list">
+            <li>Targets <code>pod/&lt;name&gt;</code>, <code>namespace/&lt;name&gt;</code>, or <code>sa/&lt;name&gt;</code></li>
+            <li>Reports findings, attack paths, blast radius, and fixes in one shot</li>
+            <li>Add <code>--graph</code> to render the whole path as a graph</li>
+          </ul>
+        </div>
+        <div class="c-term">
+          <div class="term">
+            <div class="term-bar"><i></i><i></i><i></i><span>arnav@cluster: ~/KubeConfess</span></div>
+            <div class="term-body" data-script="investigate" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="sec-rule">
+
+  <!-- ============ EVIDENCE (GRAPH) ============ -->
+  <section id="evidence">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="idx">Evidence</span>
+        <h2>The confession, drawn out as a map</h2>
+        <p>Every investigation is also a graph: identities, workloads and secrets as nodes, the permissions between them as directed edges — so a whole escalation reads at a glance.</p>
+      </div>
+
+      <div class="evidence">
+        <div class="graph" id="attackGraph" data-order='[
+            {"type":"node","id":"ag-pod-start"},
+            {"type":"edge","id":"ag-e-runsas"},
+            {"type":"node","id":"ag-sa"},
+            {"type":"edge","id":"ag-e-canread"},
+            {"type":"node","id":"ag-secret"},
+            {"type":"edge","id":"ag-e-grants"},
+            {"type":"node","id":"ag-db"},
+            {"type":"edge","id":"ag-e-canexec"},
+            {"type":"node","id":"ag-pod-exec"},
+            {"type":"edge","id":"ag-e-lateral"}
+          ]'>
+          <div class="graph-bar">
+            <span class="lt"><i></i> KUBECONFESS ATTACK GRAPH</span>
+            <span class="rt"><i></i> LIVE</span>
+          </div>
+          <svg viewBox="0 0 1160 520" role="img" aria-label="Attack graph tracing pod-attack-tester through sa-attack-tester to a database credential and Production Postgres, with a lateral-move path back through pod-exec">
+            <defs>
+              <radialGradient id="gO" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#ffcb8a"/><stop offset="100%" stop-color="#c98a2a"/></radialGradient>
+              <radialGradient id="gR" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#ffb3ae"/><stop offset="100%" stop-color="#e0554d"/></radialGradient>
+              <radialGradient id="gG" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#c3f2cf"/><stop offset="100%" stop-color="#57c98a"/></radialGradient>
+              <marker id="ar" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8a7d68"/></marker>
+            </defs>
+
+            <g class="edge" id="ag-e-runsas"><path class="ln" d="M905,270 C 820,210 730,180 660,165" marker-end="url(#ar)"/><g class="el" transform="translate(770,190)"><rect x="-38" y="-11" width="76" height="18" rx="2"/><text x="0" y="2" text-anchor="middle">RUNS_AS</text></g></g>
+            <g class="edge" id="ag-e-canread"><path class="ln" d="M572,168 C 480,200 410,230 366,262" marker-end="url(#ar)"/><g class="el" transform="translate(470,222)"><rect x="-42" y="-11" width="84" height="18" rx="2"/><text x="0" y="2" text-anchor="middle">CAN_READ</text></g></g>
+            <g class="edge" id="ag-e-grants"><path class="ln" d="M330,332 C 320,370 315,395 312,418" marker-end="url(#ar)"/><g class="el" transform="translate(212,404)"><rect x="-56" y="-11" width="112" height="18" rx="2"/><text x="0" y="2" text-anchor="middle">GRANTS_ACCESS</text></g></g>
+            <g class="edge" id="ag-e-canexec"><path class="ln" d="M615,175 C 610,250 605,320 598,388" marker-end="url(#ar)"/><g class="el" transform="translate(660,290)"><rect x="-58" y="-11" width="116" height="18" rx="2"/><text x="0" y="2" text-anchor="middle">CAN_EXEC_INTO</text></g></g>
+            <g class="edge" id="ag-e-lateral"><path class="ln" d="M655,405 C 750,370 830,335 890,300" marker-end="url(#ar)"/><g class="el" transform="translate(800,350)"><rect x="-52" y="-11" width="104" height="18" rx="2"/><text x="0" y="2" text-anchor="middle">LATERAL_MOVE</text></g></g>
+
+            <g transform="translate(945,255)"><g class="nd red pz" id="ag-pod-start"><circle class="core" r="40"/><text class="lt" y="1">P</text><text class="nm" y="60">pod-attack-tester</text><text class="sb" y="75">pod · attacker shell</text></g></g>
+            <g transform="translate(610,140)"><g class="nd orange" id="ag-sa"><circle class="core" r="40"/><text class="lt" y="1">S</text><text class="nm" y="60">sa-attack-tester</text><text class="sb" y="75">service account</text></g></g>
+            <g transform="translate(300,295)"><g class="nd green" id="ag-secret"><circle class="core" r="40"/><text class="lt" y="1">S</text><text class="nm" y="60">prod-db-credentials</text><text class="sb" y="75">secret</text></g></g>
+            <g transform="translate(300,460)"><g class="nd white" id="ag-db"><circle class="core" r="38"/><text class="lt" y="1">E</text><text class="nm" y="58">Production Postgres</text><text class="sb" y="73">external target</text></g></g>
+            <g transform="translate(608,415)"><g class="nd red pz" id="ag-pod-exec"><circle class="core" r="40"/><text class="lt" y="1">P</text><text class="nm" y="60">pod-exec</text><text class="sb" y="75">pod · default ns</text></g></g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="sec-rule">
+
+  <!-- ============ LEDGER ============ -->
+  <section id="ledger">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="idx">On the record</span>
+        <h2>Everything it can do</h2>
+        <p>A single agent, directed in whichever way the engagement calls for.</p>
+      </div>
+      <div class="ledger">
+        <div class="lrow"><code>chat</code><p>Query namespaces, workloads, roles and service accounts in plain English, backed by live cluster state.</p></div>
+        <div class="lrow"><code>--kubeconfig</code><p>Full audits from your workstation, using any kubeconfig you already have.</p></div>
+        <div class="lrow"><code>--incluster</code><p>Runs as a pod and scopes itself to that pod's own service account — nothing more.</p></div>
+        <div class="lrow"><code>attack capabilities</code><p>Confirms a path by executing it — stealing static ServiceAccount tokens and harvesting readable secret values, wherever RBAC already permits. More attack modules on the way.</p></div>
+        <div class="lrow"><code>investigate &lt;target&gt;</code><p>Reconstructs the path from a pod, namespace, or service account to cluster-admin as a structured written report.</p></div>
+        <div class="lrow"><code>investigate … --graph</code><p>Adds a rendered attack graph to any investigation — the whole escalation, drawn out like BloodHound does for Active Directory.</p></div>
+        <div class="lrow"><code>extensible</code><p>Bring your own checks and attacks. Every tool is a small Python file with two exports — add one, register it, open a pull request, and it becomes available to everyone. See the <a href="https://github.com/arnavtripathy/KubeConfess#contributing" target="_blank" rel="noopener" style="color:var(--redline);text-decoration:underline;text-underline-offset:2px">contribution guide</a>.</p></div>
+        <div class="lrow"><code>open source</code><p>MIT-licensed and developed in the open — read the code, file an issue, or submit a pull request.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="sec-rule">
+
+  <!-- ============ CONTRIBUTE ============ -->
+  <section id="contribute">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="idx">Open case files</span>
+        <h2>Add your own checks and attacks</h2>
+        <p>KubeConfess is built to be extended. Its detections and exploitation techniques are modular, so the next check is one you can write.</p>
+      </div>
+      <div class="contribute">
+        <div>
+          <h3>Contribute a technique, ship it to everyone</h3>
+          <p>Encode a misconfiguration you keep finding, or an escalation you've pulled off in the field, as a module. Open a pull request and, once merged, it runs for every KubeConfess user on their next scan. The tool gets sharper with every engagement the community brings back to it.</p>
+        </div>
+        <div class="side">
+          <h4>Good first contributions</h4>
+          <ul>
+            <li>A new misconfiguration or security check</li>
+            <li>An attack or post-exploitation module</li>
+            <li><a href="https://github.com/arnavtripathy/KubeConfess/issues" target="_blank" rel="noopener">Pick up an open issue</a></li>
+          </ul>
+          <a class="btn btn-ghost" href="https://github.com/arnavtripathy/KubeConfess#contributing" target="_blank" rel="noopener">Read the contribution guide</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="sec-rule">
+
+  <!-- ============ START ============ -->
+  <section id="start">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="idx">Start an interrogation</span>
+        <h2>Bring a cluster in for questioning</h2>
+        <p>KubeConfess is a Python CLI. Clone it, install it, and point it at a kubeconfig.</p>
+      </div>
+      <div class="install">
+        <div class="term">
+          <div class="term-bar">
+            <span style="text-align:left;flex:none">install.sh</span>
+            <button class="copy" id="copyBtn" type="button"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-6A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"/></svg><span id="copyLabel">Copy</span></button>
+          </div>
+          <pre id="installCode"><span class="c1"># clone and enter the project</span>
+git clone https://github.com/arnavtripathy/KubeConfess.git
+cd KubeConfess
+
+<span class="c1"># install into a virtualenv</span>
+python -m venv .venv && source .venv/bin/activate
+pip install .
+
+<span class="c1"># set any OpenAI-compatible provider</span>
+export API_KEY="your-api-key-here"
+
+<span class="c1"># question a cluster from your workstation</span>
+<span class="c2">kubeconfess --kubeconfig ~/.kube/config</span>
+
+<span class="c1"># or, from inside a pod</span>
+<span class="c2">kubeconfess --incluster</span>
+
+<span class="c1"># map an attack path as a graph</span>
+<span class="c2">you&gt; investigate pod/nginx-abc -n payments --graph</span></pre>
+        </div>
+        <p class="note">Running from inside the cluster? Use <code>--incluster</code> — KubeConfess scopes itself to the pod it is running in and operates from there. See the <a href="https://github.com/arnavtripathy/KubeConfess" target="_blank" rel="noopener">README on GitHub</a> for the full command reference.</p>
+      </div>
+
+      <div style="margin-top:52px" class="verdict">
+        <span class="stamp">Black Hat MEA Arsenal 2026</span>
+        <p>KubeConfess was selected to showcase at <b>Black Hat MEA Arsenal 2026</b>.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <div class="fb"><img src="assets/images/logo-icon.png" alt=""><b>KubeConfess</b></div>
+        <p>An AI-powered CLI agent for auditing and red-teaming Kubernetes cluster security.</p>
+      </div>
+      <div class="fcols">
+        <div class="fcol">
+          <h4>Project</h4>
+          <a href="https://github.com/arnavtripathy/KubeConfess" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/arnavtripathy/KubeConfess/issues" target="_blank" rel="noopener">Report an issue</a>
+          <a href="#start">Get started</a>
+        </div>
+        <div class="fcol">
+          <h4>The case</h4>
+          <a href="#charges">The charges</a>
+          <a href="#evidence">Evidence</a>
+          <a href="#ledger">Everything it can do</a>
+          <a href="#contribute">Contribute</a>
+        </div>
+      </div>
+    </div>
+    <div class="fbottom">
+      <span>© 2026 KubeConfess. Open source under the MIT license.</span>
+      <a href="https://github.com/arnavtripathy" target="_blank" rel="noopener">Built by Arnav Tripathy</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>
