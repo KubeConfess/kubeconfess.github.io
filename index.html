@@ -266,11 +266,11 @@ git clone https://github.com/KubeConfess/KubeConfess.git
 cd KubeConfess
 
 <span class="c1"># install into a virtualenv</span>
-python -m venv .venv && source .venv/bin/activate
-pip install .
+python3 -m venv .venv && source .venv/bin/activate
+pip3 install .
 
 <span class="c1"># set any OpenAI-compatible provider</span>
-export API_KEY="your-api-key-here"
+export API_KEY="your-Claude-api-key-here"
 
 <span class="c1"># question a cluster from your workstation</span>
 <span class="c2">kubeconfess --kubeconfig ~/.kube/config</span>
